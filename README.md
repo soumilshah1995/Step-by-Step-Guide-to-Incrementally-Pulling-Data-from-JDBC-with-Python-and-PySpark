@@ -7,7 +7,7 @@ Step-by-Step Guide to Incrementally Pulling Data from JDBC with Python and PySpa
 
 
 Complete Step by Step INstruction on Article 
-<PLACE HOLDER>
+* https://www.linkedin.com/pulse/step-by-step-guide-incrementally-pulling-data-from-jdbc-soumil-shah/?published=t
 
 Youtube Video Guide
-<PLACE HOLDER>
+* https://youtu.be/MeX1KxR3G7Q
