@@ -127,7 +127,7 @@ class DatabaseAurora(DatabaseInterface):
             )
         )
         self.metadata = db.MetaData()
-        logger.logger.info("Auroradb connection established successfully.")
+
 
     @error_handling_with_logging()
     def get_data(self, query):
@@ -219,9 +219,28 @@ CREATE TABLE IF NOT EXISTS public.sales
     orderdate date,
     destinationstate text COLLATE pg_catalog."default",
     shippingtype text COLLATE pg_catalog."default",
-    referral text COLLATE pg_catalog."default"
-)
+    referral text COLLATE pg_catalog."default",
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+        """
+        helper.execute_non_query(query=query)
+        time.sleep(2)
+    except Exception as e:
+        print("Error", e)
+    try:
+        query = """
+CREATE OR REPLACE FUNCTION update_sales_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
+CREATE TRIGGER update_sales_updated_at_trigger
+BEFORE UPDATE ON public.sales
+FOR EACH ROW
+EXECUTE FUNCTION update_sales_updated_at();
         """
         helper.execute_non_query(query=query)
         time.sleep(2)
